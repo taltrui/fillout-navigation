@@ -12,6 +12,7 @@ import {
 	horizontalListSortingStrategy,
 	SortableContext,
 } from "@dnd-kit/sortable";
+import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 import { Fragment, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
@@ -133,6 +134,7 @@ function PageNavigation() {
 					sensors={sensors}
 					collisionDetection={closestCenter}
 					onDragEnd={handleDragEnd}
+					modifiers={[restrictToHorizontalAxis]}
 				>
 					<SortableContext
 						items={pages}
