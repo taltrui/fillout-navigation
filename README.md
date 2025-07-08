@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fillout Navigation Component
 
-## Getting Started
+## Tech Stack
 
-First, run the development server:
+- **Framework**: Next.js 15.3.5 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **Drag & Drop**: @dnd-kit/core, @dnd-kit/sortable
+- **UI Components**: Shadcn (AlertDialog, DropdownMenu, Input)
+- **State**: Custom localStorage hook with event synchronization
+
+## 📦 Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Run development server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Component Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Navigation Button
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Drag Handle**: Entire button is draggable for reordering
+- **Click to Select**: Changes URL parameter and updates page content
+- **Context Menu**: 3-dot menu with rename, duplicate, delete, and "set as first" options
+- **Dynamic Icons**: Different icons based on position (first, middle, last)
+- **State Indicators**: Visual distinction between selected and unselected states
 
-## Learn More
+### Page Management
 
-To learn more about Next.js, take a look at the following resources:
+- **Add Pages**:
+  - "Add Page" button at the end
+  - "+" icons between pages for inserting in specific positions
+- **Rename Pages**: Modal dialog
+- **Duplicate Pages**: Creates copy with "(copy)" suffix
+- **Delete Pages**: Confirmation dialog
+- **Reorder Pages**: Drag and drop to reorder
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Data Persistence
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **localStorage Integration**: All changes automatically saved
+- **Cross-Component Sync**: Changes in navigation immediately reflect in main page
+- **Custom Event System**: Synchronizes localStorage changes across components
+- **Hydration Safe**: Prevents SSR/client mismatches
 
-## Deploy on Vercel
+## Styling System
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **CSS Variables**: Custom design tokens for colors and shadows
+- **Tailwind Classes**: Utility-first styling with custom color classes
+- **Responsive Design**: Horizontal scrolling for mobile and narrow viewports
+- **Animations**: Smooth transitions for all interactions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## State Management
+
+The application uses a custom `useLocalStorage` hook that:
+
+- Provides React state-like interface for localStorage
+- Automatically syncs changes across all components using the same key
+- Handles SSR/client hydration properly
+- Includes error handling and fallbacks
+- Dispatches custom events for same-tab synchronization
+- Instead of using a state for the selected page, it uses a URL parameter to determine the current page, allowing for deep linking and bookmarking.
