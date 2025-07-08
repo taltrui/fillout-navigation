@@ -1,10 +1,11 @@
 "use client";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import PageNavigation from "@/components/page-navigation";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import type { Page } from "@/types/page";
 
-export default function Home() {
+function HomeContent() {
 	const selectedPage = useSearchParams().get("selected-page");
 	const [pages] = useLocalStorage<Page[]>("navigation-pages", []);
 
@@ -21,5 +22,13 @@ export default function Home() {
 			</div>
 			<PageNavigation />
 		</div>
+	);
+}
+
+export default function Home() {
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<HomeContent />
+		</Suspense>
 	);
 }
